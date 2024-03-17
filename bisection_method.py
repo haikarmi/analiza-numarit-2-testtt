@@ -94,11 +94,15 @@ def bisection_method(f, a, b, tol=1e-6):
 
 
 if __name__ == '__main__':
+    print(
+        "the git link:https://github.com/haikarmi/analiza-numarit-2-testtt.git\n group:Almog Babila-209477678, Hai karmi-207265687, Yagel Batito-318271863, Meril Hasid-324569714\n date :18/03/24 \n student: hai karmi id: 207265687")
+    print("..........................................................................................")
+
     x = sp.symbols('x')
-    f = x**2 - 4 * sin(x)
+    f = x**3 -2*x -5
     g = (x-2)**2
-    a = -1
-    b = 3
+    a = 1
+    b = 5
     jump = (b-a)/10
     i=a+jump
     while i<=b:
@@ -110,4 +114,3 @@ if __name__ == '__main__':
             print(f"none roots between ({a})-({i})\n")
         a = i
         i = i + jump
-        print("hai")

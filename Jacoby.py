@@ -26,6 +26,7 @@ Returns variables:
 
 """
 
+
 def jacobi_iterative(A, b, X0, TOL=1e-16, N=200):
     n = len(A)
     k = 1
@@ -33,9 +34,10 @@ def jacobi_iterative(A, b, X0, TOL=1e-16, N=200):
     if is_diagonally_dominant(A):
         print('Matrix is diagonally dominant - preforming jacobi algorithm\n')
     else:
-        A,b = DominantDiagonalFix(A,b)
+        A, b = DominantDiagonalFix(A, b)
 
-    print( "Iteration" + "\t\t\t".join([" {:>12}".format(var) for var in ["x{}".format(i) for i in range(1, len(A) + 1)]]))
+    print(
+        "Iteration" + "\t\t\t".join([" {:>12}".format(var) for var in ["x{}".format(i) for i in range(1, len(A) + 1)]]))
     print("-----------------------------------------------------------------------------------------------")
 
     while k <= N:
@@ -59,7 +61,6 @@ def jacobi_iterative(A, b, X0, TOL=1e-16, N=200):
     return tuple(x)
 
 
-
 def make_diagonally_dominant(matrix, result_vector):
     # Check if the matrix is square
     if matrix.shape[0] != matrix.shape[1]:
@@ -81,6 +82,9 @@ def make_diagonally_dominant(matrix, result_vector):
 
 
 if __name__ == "__main__":
+    print(
+        "the git link:https://github.com/haikarmi/analiza-numarit-2-testtt.git\n group:Almog Babila-209477678, Hai karmi-207265687, Yagel Batito-318271863, Meril Hasid-324569714\n date :18/03/24 \n student: hai karmi id: 207265687")
+    print("..........................................................................................")
 
     A = np.array([[3, 1, 1], [1, 1, 3], [1, 3, 1]])
     b = np.array([7, 7, 11])
@@ -88,5 +92,4 @@ if __name__ == "__main__":
     x = np.zeros_like(b, dtype=np.double)
     solution = jacobi_iterative(A, b, x)
 
-    print(bcolors.OKBLUE,"\nApproximate solution:", solution)
-    print("hai")
+    print(bcolors.OKBLUE, "\nApproximate solution:", solution)

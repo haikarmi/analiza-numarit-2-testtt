@@ -1,4 +1,8 @@
-import numpy as np
+"""
+fixed by hai karmi
+"""
+
+
 import numpy as np
 
 def print_matrix(matrix):
@@ -18,7 +22,7 @@ def MaxNorm(matrix):
     max_norm = 0
     for i in range(len(matrix)):
         norm = 0
-        for j in range(len(matrix)):
+        for j in range(len(matrix[0])):
             # Sum of organs per line with absolute value
             norm += abs(matrix[i][j])
         # Maximum row amount
@@ -97,7 +101,7 @@ def swap_rows_elementary_matrix(n, row1, row2):
 
 
 def matrix_multiply(A, B):
-    if len(A[0]) != len(B):
+    if len(A) != len(B[0]):
         raise ValueError("Matrix dimensions are incompatible for multiplication.")
 
     result = [[0 for _ in range(len(B[0]))] for _ in range(len(A))]
@@ -168,15 +172,15 @@ def Determinant(matrix, mul):
 # Partial Pivoting: Find the pivot row with the largest absolute value in the current column
 def partial_pivoting(A,i,N):
     pivot_row = i
-    v_max = A[pivot_row][i]
+    v_max = abs(A[pivot_row][i])
     for j in range(i + 1, N):
         if abs(A[j][i]) > v_max:
-            v_max = A[j][i]
+            v_max = abs(A[j][i])
             pivot_row = j
 
     # if a principal diagonal element is zero,it denotes that matrix is singular,
     # and will lead to a division-by-zero later.
-    if A[i][pivot_row] == 0:
+    if A[pivot_row][i] == 0:
         return "Singular Matrix"
 
 
@@ -218,12 +222,11 @@ def MulMatrixVector(InversedMat, b_vector):
     result = []
     # Initialize the x vector
     for i in range(len(b_vector)):
-        result.append([])
-        result[i].append(0)
+        result.append(0)
     # Multiplication of inverse matrix in the result vector
     for i in range(len(InversedMat)):
         for k in range(len(b_vector)):
-            result[i][0] += InversedMat[i][k] * b_vector[k][0]
+            result[i] += InversedMat[i][k] * b_vector[k]
     return result
 
 def RowXchageZero(matrix,vector):
@@ -235,15 +238,16 @@ def RowXchageZero(matrix,vector):
       """
 
     for i in range(len(matrix)):
-        for j in range(i, len(matrix)):
+        for j in range(i+1, len(matrix)):
             # The pivot member is not zero
-            if matrix[i][i] == 0:
+            if matrix[i][i] == 0 and matrix[j][i] != 0:
                 temp = matrix[j]
                 temp_b = vector[j]
                 matrix[j] = matrix[i]
                 vector[j] = vector[i]
                 matrix[i] = temp
                 vector[i] = temp_b
+
 
     return [matrix, vector]
 
@@ -309,7 +313,7 @@ def RowXchange(matrix, vector):
 
     for i in range(len(matrix)):
         max = abs(matrix[i][i])
-        for j in range(i, len(matrix)):
+        for j in range(i+1, len(matrix)):
             # The pivot member is the maximum in each column
             if abs(matrix[j][i]) > max:
                 temp = matrix[j]
@@ -321,129 +325,3 @@ def RowXchange(matrix, vector):
                 max = abs(matrix[i][i])
 
     return [matrix, vector]
-
-def is_diagonally_dominant(mat):
-    if mat is None:
-        return False
-
-    d = np.diag(np.abs(mat))  # Find diagonal coefficients
-    s = np.sum(np.abs(mat), axis=1) - d  # Find row sum without diagonal
-    return np.all(d > s)
-
-
-def is_square_matrix(mat):
-    if mat is None:
-        return False
-
-    rows = len(mat)
-    for row in mat:
-        if len(row) != rows:
-            return False
-    return True
-
-
-def reorder_dominant_diagonal(matrix):
-    n = len(matrix)
-    permutation = np.argsort(np.diag(matrix))[::-1]
-    reordered_matrix = matrix[permutation][:, permutation]
-    return reordered_matrix
-
-
-def DominantDiagonalFix(matrix,b):
-    """
-    Function to change a matrix to create a dominant diagonal
-    :param matrix: Matrix nxn
-    :return: Change the matrix to a dominant diagonal
-    """
-    #Check if we have a dominant for each column
-    dom = [0]*len(matrix)
-    result = list()
-    new_b = list()
-   # Find the largest organ in a row
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            if (matrix[i][j] > sum(map(abs,map(int,matrix[i])))-matrix[i][j]) :
-                dom[i]=j
-    for i in range(len(matrix)):
-        result.append([])
-        # Cannot dominant diagonal
-        if i not in dom:
-            print("Couldn't find dominant diagonal.")
-            return matrix,b
-    # Change the matrix to a dominant diagonal
-    for i,j in enumerate(dom):
-        result[j]=(matrix[i])
-        new_b.append(b[j])
-    print("sucsess to make dominant diagonal with row change")
-    return result,new_b
-
-
-def swap_rows_elementary_matrix(n, row1, row2):
-    elementary_matrix = np.identity(n)
-    elementary_matrix[[row1, row2]] = elementary_matrix[[row2, row1]]
-
-    return np.array(elementary_matrix)
-
-
-def matrix_multiply(A, B):
-    if len(A[0]) != len(B):
-        raise ValueError("Matrix dimensions are incompatible for multiplication.")
-
-    result = [[0 for _ in range(len(B[0]))] for _ in range(len(A))]
-
-    for i in range(len(A)):
-        for j in range(len(B[0])):
-            for k in range(len(B)):
-                result[i][j] += A[i][k] * B[k][j]
-
-    return np.array(result)
-
-def row_addition_elementary_matrix(n, target_row, source_row, scalar=1.0):
-
-    if target_row < 0 or source_row < 0 or target_row >= n or source_row >= n:
-        raise ValueError("Invalid row indices.")
-
-    if target_row == source_row:
-        raise ValueError("Source and target rows cannot be the same.")
-
-    elementary_matrix = np.identity(n)
-    elementary_matrix[target_row, source_row] = scalar
-
-    return np.array(elementary_matrix)
-
-
-def scalar_multiplication_elementary_matrix(n, row_index, scalar):
-
-    if row_index < 0 or row_index >= n:
-        raise ValueError("Invalid row index.")
-
-    if scalar == 0:
-        raise ValueError("Scalar cannot be zero for row multiplication.")
-
-    elementary_matrix = np.identity(n)
-    elementary_matrix[row_index, row_index] = scalar
-
-    return np.array(elementary_matrix)
-
-# Partial Pivoting: Find the pivot row with the largest absolute value in the current column
-def partial_pivoting(A,i,N):
-    pivot_row = i
-    v_max = A[pivot_row][i]
-    for j in range(i + 1, N):
-        if abs(A[j][i]) > v_max:
-            v_max = A[j][i]
-            pivot_row = j
-
-    # if a principal diagonal element is zero,it denotes that matrix is singular,
-    # and will lead to a division-by-zero later.
-    if A[i][pivot_row] == 0:
-        return "Singular Matrix"
-
-
-    # Swap the current row with the pivot row
-    if pivot_row != i:
-        e_matrix = swap_rows_elementary_matrix(N, i, pivot_row)
-        print(f"elementary matrix for swap between row {i} to row {pivot_row} :\n {e_matrix} \n")
-        A = np.dot(e_matrix, A)
-        print(f"The matrix after elementary operation :\n {A}")
-        print("------------------------------------------------------------------")

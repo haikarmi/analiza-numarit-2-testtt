@@ -39,12 +39,14 @@ def gauss_seidel(A, b, X0, TOL=1e-16, N=200):
 
 
 if __name__ == '__main__':
+    print(
+        "the git link:https://github.com/haikarmi/analiza-numarit-2-testtt.git\n group:Almog Babila-209477678, Hai karmi-207265687, Yagel Batito-318271863, Meril Hasid-324569714\n date :18/03/24 \n student: hai karmi id: 207265687")
+    print("..........................................................................................")
 
     A = np.array([[3, 1, 1], [1, 1, 3], [1, 3, 1]])
-    b = np.array([7.0, 7.0, 11.0])
+    b = np.array([7, 7, 11])
     X0 = np.zeros_like(b)
 
     solution =gauss_seidel(A, b, X0)
     print(bcolors.OKBLUE,"\nApproximate solution:", solution)
 
-    print("hai")

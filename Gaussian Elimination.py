@@ -4,11 +4,10 @@ from numpy.linalg import norm, inv
 from colors import bcolors
 
 print(
-    "date:19.02.24 \n the git link:https://github.com/yagelbatito/analiza_gauss_test.git\ngroup:Almog Babila 209477678, Hay Carmi 207265687, Yagel Batito 318271863, Meril Hasid 324569714\nstudent:Yagel Batito 318271863")
+    "date:18.03.24 \n the git link:https:https://github.com/haikarmi/analiza-numarit-2-testtt.git\ngroup:Almog Babila 209477678, Hay Carmi 207265687, Yagel Batito 318271863, Meril Hasid 324569714\nstudent:Hai karmi id: 207265687")
 
 
 def gaussianElimination(mat):
-
     N = len(mat)
 
     singular_flag = forward_substitution(mat)
@@ -34,7 +33,7 @@ def swap_row(mat, i, j):
 
 
 def forward_substitution(mat):
-    print("The max norm of matrix is: ", norm(A_b) + 1)
+    # print("The max norm of matrix is: ", norm(A_b) + 1)
     N = len(mat)
     for k in range(N):
 
@@ -91,10 +90,13 @@ def backward_substitution(mat):
 
 
 if __name__ == '__main__':
+    # A_b= np.array([[2, 3, 4, 5, 6], [-5, 3, 4, -2, 3], [4, -5, -2, 2, 6], [4, 5, -1, -2, -3], [5, 5, 3, -3, 5]])
 
-    A_b = [[1,1/2,1/3,1],
-            [1/2,1/3,1/4,0],
-            [1/3,1/4,1/5,0]]
+    A_b = [[-1, 1, 3, -3, 1,-1],
+           [3, -3, -4, 2, 3,18],
+           [2, 1, -5, -3, 5,6],
+           [-5, -6, 4, 1, 3,22],
+           [3, -2, -2, -3, 5,10]]
 
     """
     check_det = []
